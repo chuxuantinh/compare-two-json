@@ -9,3 +9,41 @@ function compare(obj1, obj2) {
 
   return true;
 }
+
+
+function diff(a, b, namespace) {
+  namespace = (namespace || '') + '.';
+
+  var keysInA = Object.keys(a),
+      keysInB = Object.keys(b);
+
+  var diffA = keysInA.reduce(function(changes, key) {
+    var ns = namespace + key;
+
+    if(typeof b[key] == 'undefined') {
+      return changes.concat([{ type: 'DELETED', id: ns }]);
+    }
+
+    if(a[key] !== b[key]) {
+      return changes.concat([{ type: 'CHANGED', id: ns }]);
+    }
+
+    if(typeof a[key] == b[key] == 'object') {
+      return diff(a[key], b[key], ns);
+    }
+
+    return changes; 
+  }, []);
+
+  var diffB = keysInB.reduce(function(changes, key) {
+    var ns = namespace + key;
+
+    if(typeof a[key] == 'undefined') {
+      return changes.concat([{ type: 'ADDED', id: ns }]);
+    }
+
+    return changes;
+  }, []);
+
+  return diffA.concat(diffB);
+}
