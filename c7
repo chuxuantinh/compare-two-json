@@ -1,0 +1,128 @@
+Compare JSON objects ignoring the order of the properties in JavaScript
+properties in JavaScript
+To compare two JSON objects we cannot use equality operators === (in case of JavaScript), == (in case of Java).
+
+In JavaScript we primarily compare two JSON objects by converting them to their string versions using JSON.stringify. It  seems to be the most obvious and easiest choice for comparison as no external dependency is required. But there’s a problem, what if the JSON objects have same properties but in different order. The equality check would fail in this case. This is why we don’t recommend to use JSON.stringify while comparing JSON objects.
+
+We have a few options to compare two JSON objects and ensure equality.
+.isEqual() is our favorite pick.
+var _ = require('lodash');
+_.isEqual({a:1, b:2}, {b:2, a:1});
+//true
+properties in JavaScript
+To compare two JSON objects we cannot use equality operators === (in case of JavaScript), == (in case of Java).
+
+In JavaScript we primarily compare two JSON objects by converting them to their string versions using JSON.stringify. It  seems to be the most obvious and easiest choice for comparison as no external dependency is required. But there’s a problem, what if the JSON objects have same properties but in different order. The equality check would fail in this case. This is why we don’t recommend to use JSON.stringify while comparing JSON objects.
+
+We have a few options to compare two JSON objects and ensure equality.
+
+Lodash’s .isEqual() is our favorite pick.
+
+var _ = require('lodash');
+_.isEqual({a:1, b:2}, {b:2, a:1});
+//true
+var _ = require('lodash');
+_.isEqual({a:1, b:2}, {b:2, a:1});
+//true
+
+*****
+fast-equals is another option which provides blazing fast equality comparisons.
+
+import { deepEqual } from 'fast-equals';
+console.log(deepEqual({a:1, b:2}, {b:2, a:1})); // true
+
+properties in JavaScript
+To compare two JSON objects we cannot use equality operators === (in case of JavaScript), == (in case of Java).
+
+In JavaScript we primarily compare two JSON objects by converting them to their string versions using JSON.stringify. It  seems to be the most obvious and easiest choice for comparison as no external dependency is required. But there’s a problem, what if the JSON objects have same properties but in different order. The equality check would fail in this case. This is why we don’t recommend to use JSON.stringify while comparing JSON objects.
+
+We have a few options to compare two JSON objects and ensure equality.
+
+Lodash’s .isEqual() is our favorite pick.
+
+var _ = require('lodash');
+_.isEqual({a:1, b:2}, {b:2, a:1});
+//true
+var _ = require('lodash');
+_.isEqual({a:1, b:2}, {b:2, a:1});
+//true
+
+fast-equals is another option which provides blazing fast equality comparisons.
+
+import { deepEqual } from 'fast-equals';
+console.log(deepEqual({a:1, b:2}, {b:2, a:1})); // true
+
+deep-equal which is Node’s assert.deepEqual() algorithm as a standalone module. This module is around 46 times faster than wrapping assert.deepEqual() in a try/catch.
+var equal = require('deep-equal');
+console.log(equal({a:1, b:2}, {b:2, a:1})); // true
+deep-equal performs well than JSON.stringify() Tested
+
+//A simple deep compare util using Lodash and sort-any npm package. 
+//This code compares two JSON objects completely ignoring the order of the JSON properties.
+//Code source: https://github.com/oprogramador/deep-equal-in-any-order
+
+const { _} = require('lodash');
+const sortAny = require('sort-any');
+
+const sortDeep = (object) => {
+  if (!Array.isArray(object)) {
+    if (!(typeof object === 'object') || object === null) {
+      return object;
+    }
+
+    return _.mapValues(object, sortDeep);
+  }
+
+  return sortAny(object.map(sortDeep));
+};
+
+
+console.log(JSON.stringify(sortDeep(response.body.payload.data)) === JSON.stringify(sortDeep(responses[key].payload.data)));
+
+//true
+
+
+
+The deep equality is similar to the shallow equality, but with one difference. During the shallow check, if the compared properties are objects, a recursive shallow equality check is performed on these nested objects.
+
+Let's see an implementation of deep equality check:
+
+function deepEqual(object1, object2) {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    const val1 = object1[key];
+    const val2 = object2[key];
+    const areObjects = isObject(val1) && isObject(val2);
+    if (
+      areObjects && !deepEqual(val1, val2) ||
+      !areObjects && val1 !== val2
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+function isObject(object) {
+  return object != null && typeof object === 'object';
+}
+The highlighted line areObjects && !deepEqual(val1, val2) indicates that as soon as the compared properties are objects, a recursive call starts to verify whether the nested objects are equal too.
+
+Now, let's see an example of deepEquality():
+
+const hero1 = {
+  name: 'Batman',
+  address: {
+    city: 'Gotham'
+  }
+};
+const hero2 = {
+  name: 'Batman',
+  address: {
+    city: 'Gotham'
+  }
+};
+deepEqual(hero1, hero2); // => true
