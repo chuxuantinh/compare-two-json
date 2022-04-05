@@ -1,0 +1,31 @@
+const keys1 = [];
+    const values1 = [];
+    Object.keys(obj1).forEach((element) => {
+      keys1.push(element);
+    });
+    Object.values(obj1).forEach((element) => {
+      values1.push(element);
+    });
+    const keys2 = [];
+    const values2 = [];
+    Object.keys(obj2).forEach((element) => {
+      keys2.push(element);
+    });
+    Object.values(obj2).forEach((element) => {
+      values2.push(element);
+    });
+    const obj = {};
+    keys1.forEach((element, i) => {
+      for (let index = 0; index < keys2.length; index++) {
+        if (element === keys2[index]) {
+          if (values1[i] !== values2[index]) {
+            const jsonKey = element;
+            obj[jsonKey] = values1[i];
+          }
+          break;
+        }
+      }
+    });
+    console.log(obj);
+    return obj;
+  }
