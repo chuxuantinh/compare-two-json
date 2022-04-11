@@ -1,0 +1,193 @@
+const a ={
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id": "policy 1",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+};
+const b ={
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id": "policy 1",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+};
+
+
+function ObjectsDiff(o1,o2) {
+    const typeObject = function(o){
+        return typeof o === 'object';
+    };
+    const diff = function (o1, o2) {
+        const result = {};
+        // if first is item is not object
+        if (!typeObject(o1) && typeObject(o2)) {
+            return o2;
+        }
+        // if second is item is not object
+        else if (typeObject(o1) && !typeObject(o2)) {
+            return undefined;
+        }
+        // if they are equal
+        else if (Object.is(o1, o2)) {
+            return undefined;
+        }
+        const keys = Object.keys(o2);
+        for (let i=0; i<keys.length; i++) {
+            const key = keys[i];
+            // if both are objects
+            if ( typeObject(o1[key]) && typeObject(o2[key])) {
+                // if equal, return nothing
+                if ( Object.is(o1[key], o2[key]) ) {
+                    // do nothing
+                } else if (o1[key] === o2[key]) {
+                    // do nothing
+                } else {
+                    result[key] = diff(o1[key],o2[key]);
+                }
+            } else if (o1[key] == o2[key]) {
+                result[key] = o2[key];
+            } else {
+                // do nothing
+            }
+        }
+        return result;
+    };
+    return [
+        diff(o1,o2),
+        diff(o2,o1),
+    ];
+}
+
+console.log( ObjectsDiff(a,b));
+
+
+***CT***
+Output:
+
+[
+  {
+    _id: { '$oid': '60f44ca55bfe5b01d442acc7' },
+    collection_name: 'Department',
+    policy_id: 'policy 1',
+    description: '....',
+    rule_combining: 'permit-overrides',
+    is_attribute_resource_required: false,
+    action: 'read',
+    target: { function_name: 'BooleanEqual', parameters: [Object] },
+    rules: { '0': [Object] }
+  },
+  {
+    _id: { '$oid': '60f44ca55bfe5b01d442acc7' },
+    collection_name: 'Department',
+    policy_id: 'policy 1',
+    description: '....',
+    rule_combining: 'permit-overrides',
+    is_attribute_resource_required: false,
+    action: 'read',
+    target: { function_name: 'BooleanEqual', parameters: [Object] },
+    rules: { '0': [Object] }
+  }
+]
