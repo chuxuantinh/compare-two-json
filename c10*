@@ -438,3 +438,43 @@ Object.defineProperty(Object.prototype, "equals", {
         return JSON.stringify(sort(this)) === JSON.stringify(sort(obj));
     }
 });
+
+
+//**CT***
+PSEDOCODE
+function getDiff(Tree root, Tree root1){
+   Queue queue->push(root);
+   Queue queue1->push(root1);
+   level = 1;
+   while(queue->size() != 0 && queue1->size() != 0){
+      if(queue->size() != queue1->size()) {
+            PRINT: "THE TREE AREN'T IN SAME STRUCTURE :/";
+            return;
+      }
+
+      size = queue->size();
+      /* traversing both trees level-by-level */
+      while(size-- > 0){
+           Tree temp = queue->peek();
+           Tree temp1 = queue1->peek();
+
+           queue->pop();
+           queue1->pop();
+
+            if(!temp->node != temp1->node) {
+                  PROCESS: level;
+            }
+            if(temp->left != null && temp1->left != null) {
+                queue->push(temp->left);
+                queue1->push(temp1->left);
+            }
+
+            if(temp->right!= null && temp1->right!= null) {
+                queue->push(temp->right);
+                queue1->push(temp1->right);
+            }
+        }
+        /* increase level */
+        level += 1;
+    }
+}
