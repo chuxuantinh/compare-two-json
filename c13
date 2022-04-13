@@ -1,0 +1,12 @@
+let person = [
+    {name: "chu", id: 1, joined: "2020"},
+    {name: "tinh", id: 2, joined: "2021"}
+]    
+let  salary = [
+    {name: "chu", id: 1, salary: 3000},
+    {name: "tinh", id: 2, salary: 5000}
+];    
+
+const uniqueSalaries = new Map(salary.map(s => [s.id, s]));
+const result = person.map(({id, ...rest}) => ({...rest, ...uniqueSalaries.get(id)}));
+console.log(result);
