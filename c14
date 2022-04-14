@@ -1,0 +1,158 @@
+var array1 = [{
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id": "policy 2",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor1"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+];
+var array2 = [{
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id22": "policy 1",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor12"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+];
+
+function getDifferences(oldObj, newObj) {
+    var diff = {};
+
+    for (var k in oldObj) {
+        if (!(k in newObj)){
+            diff[k] = undefined;  // old key does not exist in new
+        } else {
+            switch (typeof oldObj[k]){
+                case "array": {
+                    String(oldObj[k]) !== String(newObj[k]) ? diff[k] = newObj[k] : null;
+                    break;
+                } case "object": {                        
+                    Object.keys(oldObj[k]).forEach(key =>{                           
+                        if(oldObj[k][key] !== newObj[k][key]){
+                            if(diff[k]){
+                                diff[k][key] = newObj[k][key];
+                            } else {
+                                diff[k] = {[key]: newObj[k][key]}
+                            }
+                        }
+                    });
+                    //JSON.stringify(oldObj[k]) !== JSON.stringify(newObj[k]) ? diff[k] = newObj[k] : null; Optional basic comparision
+                    break;
+                } default: { //Values are strings or numbers
+                    oldObj[k] !== newObj[k] ? diff[k] = newObj[k] : null;
+                    break;
+                }
+            }
+        }
+    }
+
+    for (k in newObj) {
+        if (!(k in oldObj))
+        diff[k] = newObj[k]; // property is new
+    }     
+    return diff;
+}
+
+console.log(getDifferences(array1,array2))
