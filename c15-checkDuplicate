@@ -1,0 +1,52 @@
+checkDuplicate();
+  function checkDuplicate() {
+      let arr = [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "BooleanEqual",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ];
+
+
+
+//checkDuplicate();
+  //function checkDuplicate() {
+      //let arr = ["abc","xy","bb", "abc"];
+      let result = false;
+      // call some function with callback function as argument
+      result = arr.some((element, index) => {return arr.indexOf(element) !== index});
+      if(result) {
+         console.log('Array contains duplicate elements');
+      } else {
+         console.log('Array does not contain duplicate elements');
+      }
+   }
