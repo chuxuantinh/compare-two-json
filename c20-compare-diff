@@ -165,6 +165,13 @@ const compareObjects = (arr1, arr2) => {
     }
     // a man has values that a girl does not share
     if (arr1[key] !== arr2[key]) return false
+    else
+    { if ((arr1[key] ==arr2[key]) && (arr1[key]=='StringEqual'))
+    {
+      console.log(JSON.stringify(arr1));
+    }
+      
+    }
   }
 
   return true
