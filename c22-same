@@ -223,3 +223,6 @@ const compare = (a, b) => {
 
 
 console.log(JSON.stringify(compare(a,b)));
+
+[LOG]: "[{"_id":"rule 1","effect":"Permit","condition":{"function_name":"Or","parameters":[{"function_name":"StringEqual","parameters":[{"value":"role","resource_id":"Subject"},{"value":"tinh"}]},{"function_name":"StringEqual","parameters":[{"value":"role","resource_id":"Subject"},{"value":"doctor"}]}]}}]" 
+[LOG]: "true" 
