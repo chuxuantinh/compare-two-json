@@ -1,5 +1,3 @@
-
-
 const a= {
   "_id": {
     "$oid": "60f44ca55bfe5b01d442acc7"
@@ -166,7 +164,7 @@ const compareObjects = (arr1, arr2) => {
     // a man has values that a girl does not share
     if (arr1[key] !== arr2[key]) return false
     else
-    { if ((arr1[key] ==arr2[key]) && (arr1[key]=='StringEqual'))
+    { if ((arr1[key] ==arr2[key]) && (key=='function_name')&& (key[arr1]== key[arr2] ))
     {
       console.log(JSON.stringify(arr1));
     }
@@ -184,6 +182,5 @@ const compare = (a, b) => {
   return false
 }
 
-//module.exports = compare
 
-console.log(compare(a,b));
+console.log(JSON.stringify(compare(a,b)));
