@@ -1,0 +1,77 @@
+
+
+let a = [{
+        "function_name": "IntegerGreaterThan",
+        "parameters": [
+          {
+            "value": "dept_id",
+            "resource_id": "Resource"
+          },
+          {
+            "value": "10"
+          }
+        ]
+      },
+      {
+        "function_name": "IntegerGreaterThan",
+        "parameters": [
+          {
+            "value": "dept_id",
+            "resource_id": "Resource"
+          },
+          {
+            "value": "102"
+          }
+        ]
+      },
+      {
+        "function_name": "IntegerGreaterThan",
+        "parameters": [
+          {
+            "value": "dept_id",
+            "resource_id": "Resource"
+          },
+          {
+            "value": "102"
+          }
+        ]
+      }
+  ]
+let q = [...new Map(a.map(obj => [JSON.stringify(obj), obj])).values()];
+
+console.log(q)
+
+///CT///
+[LOG]: [{
+  "function_name": "IntegerGreaterThan",
+  "parameters": [
+    {
+      "value": "dept_id",
+      "resource_id": "Resource"
+    },
+    {
+      "value": "10"
+    }
+  ]
+}, {
+  "function_name": "IntegerGreaterThan",
+  "parameters": [
+    {
+      "value": "dept_id",
+      "resource_id": "Resource"
+    },
+    {
+      "value": "102"
+    }
+  ]
+}] 
+
+
+///C3///
+
+function removeDuplicateObjects(array: any[]) {
+  return [...new Set(array.map(s => JSON.stringify(s)))]
+    .map(s => JSON.parse(s));
+}
+
+console.log(removeDuplicateObjects(a));
