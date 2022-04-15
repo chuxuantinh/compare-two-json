@@ -75,3 +75,8 @@ function removeDuplicateObjects(array: any[]) {
 }
 
 console.log(removeDuplicateObjects(a));
+
+///c4
+
+const data = Array.from(new Set(a.map(JSON.stringify))).map(JSON.parse);
+console.log(data);
