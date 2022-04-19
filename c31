@@ -1,0 +1,121 @@
+const a= {
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id": "policy 1",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+
+const b = {
+  "_id": {
+    "$oid": "60f44ca55bfe5b01d442acc7"
+  },
+  "collection_name": "Department",
+  "policy_id": "policy 1",
+  "description": "....",
+  "rule_combining": "permit-overrides",
+  "is_attribute_resource_required": false,
+  "action": "read",
+  "target": {
+    "function_name": "BooleanEqual",
+    "parameters": [
+      {
+        "value": "active",
+        "resource_id": "Subject"
+      },
+      {
+        "value": "true"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "_id": "rule 1",
+      "effect": "Permit",
+      "condition": {
+        "function_name": "Or",
+        "parameters": [
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "tinh"
+              }
+            ]
+          },
+          {
+            "function_name": "StringEqual",
+            "parameters": [
+              {
+                "value": "role",
+                "resource_id": "Subject"
+              },
+              {
+                "value": "doctor1"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+console.log(JSON.stringify(a)===JSON.stringify(b));
+//false
