@@ -116,6 +116,5 @@ const b = {
   ]
 }
 
-
-console.log(JSON.stringify(a)===JSON.stringify(b));
-//false
+console.log(JSON.stringify(a)===JSON.stringify(b)); //false
+console.log(Object.entries(a).toString() === Object.entries(b).toString()); //true
